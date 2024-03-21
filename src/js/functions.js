@@ -2171,6 +2171,7 @@ function renderKeyframe(object, prop, time) {
 
 // Create a keyframe
 function newKeyframe(property, object, time, value, render) {
+
   // Check if property can be animated
   if (
     $.inArray(
