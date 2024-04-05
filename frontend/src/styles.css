@@ -60,7 +60,7 @@ body {
 
 /* Navigation */
 #top-canvas {
-  position: absolute;
+  position:relative;
   top: 10px;
   left: 0px;
   z-index: 99999999;
@@ -1578,15 +1578,26 @@ canvas {
 /* Layer list */
 #layer-list {
   position: absolute;
-  height: 245px;
-  width: 375px;
-  left: 0px;
-  bottom: 60px;
+  height: 40vh;
+  width: 300px;
+  right: 0px; /* 将左边距改为右边距 */
+  bottom: 0px; /* 将顶边距改为底边距 */
   background-color: var(--panel-back);
   box-sizing: border-box;
   border-right: 1px solid var(--panel-stroke);
   z-index: 9999999;
 }
+/* #layer-list {
+  position: absolute;
+  height: 30vh;
+  width: 375px;
+  left: 0px;
+  bottom: 0px;
+  background-color: var(--panel-back);
+  box-sizing: border-box;
+  border-right: 1px solid var(--panel-stroke);
+  z-index: 9999999;
+} */
 #layer-inner-list {
   width: 100%;
   height: 100%;
