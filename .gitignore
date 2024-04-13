@@ -1,0 +1,8 @@
+backend/backend/__pycache__/
+backend/__pycache__/
+backend/prompt/__pycache__/
+backend/.DS_Store
+backend/dump.rdb
+backend/prompt/migrations/__pycache__/
+backend/prompt/tests.py
+Backend/*.log
