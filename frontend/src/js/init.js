@@ -209,7 +209,7 @@ const audio_panel =
 
 // Browser variants
 const shape_browser =
-  '<div id="search-fixed"><p class="property-title">Objects</p><img id="collapse" src="assets/collapse.svg"><div id="browser-search"><input placeholder="Search..."><img src="assets/search.svg" id="search-icon"><img src="assets/delete.svg" id="delete-search"><div id="search-button">Go</div></div></div><div id="shapes-cont"><p class="row-title">Shapes</p><div class="gallery-row" id="shapes-row"></div><p class="row-title">Emojis</p><div class="gallery-row" id="emojis-row"></div></div>';
+  '<div id="search-fixed"><p class="property-title">Objects</p><img id="collapse" src="assets/collapse.svg"><div id="browser-search"><input placeholder="Search..."><img src="assets/search.svg" id="search-icon"><img src="assets/delete.svg" id="delete-search"><div id="search-button">Go</div></div></div><div id="shapes-cont"><p class="row-title">Characters</p><div class="gallery-row" id="shapes-row"></div><p class="row-title">Props</p><div class="gallery-row" id="emojis-row"></div><<p class="row-title">Scenes</p><div class="gallery-row" id="scenes-row"></div><p class="row-title">Speech Bubbles</p><div class="gallery-row" id="bubbles-row"></div>/div>';
 const image_browser =
   '<div id="search-fixed"><p class="property-title">Images</p><img id="collapse" src="assets/collapse.svg"><div id="browser-search"><input placeholder="Search..."><a href="https://pixabay.com" target="_blank" id="pixabay"><img src="assets/pixabay.svg"></a><img src="assets/search.svg" id="search-icon"><img src="assets/delete.svg" id="delete-search"><div id="search-button">Go</div></div></div><div id="shapes-cont"><div id="landing"><div id="landing-text">Browse millions of high quality images from Pixabay. Use the search bar above or choose from popular categories below.</div><div id="categories"></div></div><div id="images-grid"></div></div>';
 const text_browser =
@@ -315,6 +315,41 @@ var emoji_items = [
   'assets/twemojis/thinking-face-emoji.png',
 ];
 
+var scenes_items = [
+  'assets/twemojis/laughing-emoji.png',
+  'assets/twemojis/crying-emoji.png',
+  'assets/twemojis/surprised-emoji.png',
+  'assets/twemojis/smiling-emoji.png',
+  'assets/twemojis/tongue-emoji.png',
+  'assets/twemojis/heart-eyes-emoji.png',
+  'assets/twemojis/heart-kiss-emoji.png',
+  'assets/twemojis/sunglasses-cool-emoji.png',
+  'assets/twemojis/ghost-emoji.png',
+];
+
+var bubbles_items = [
+  'assets/twemojis/construction-emoji.png',
+  'assets/twemojis/plane-emoji.png',
+  'assets/twemojis/rocket-emoji.png',
+  'assets/twemojis/clock-emoji.png',
+  'assets/twemojis/star-emoji.png',
+  'assets/twemojis/sun-emoji.png',
+  'assets/twemojis/moon-emoji.png',
+  'assets/twemojis/fire-emoji.png',
+  'assets/twemojis/sparkles-emoji.png',
+  'assets/twemojis/party-popper-emoji.png',
+  'assets/twemojis/gift-emoji.png',
+  'assets/twemojis/trophy-emoji.png',
+  'assets/twemojis/target-emoji.png',
+  'assets/twemojis/gem-emoji.png',
+  'assets/twemojis/money-emoji.png',
+  'assets/twemojis/pencil-emoji.png',
+  'assets/twemojis/graph-emoji.png',
+  'assets/twemojis/wip-emoji.png',
+  'assets/twemojis/winking-face-emoji.png',
+  'assets/twemojis/pleading-face-emoji.png',
+  'assets/twemojis/thinking-face-emoji.png',
+];
 // Image list
 var image_grid_items = [
   'https://images.unsplash.com/photo-1609153259378-a8b23c766aec?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1866&q=80',

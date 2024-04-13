@@ -901,6 +901,8 @@ function populateGrid(type) {
   if (type == 'shape-tool') {
     $('#shapes-row').html('');
     $('#emojis-row').html('');
+    $('#scenes-row').html('');
+    $('#bubbles-row').html('');
     shape_grid_items.forEach(function (item) {
       $('#shapes-row').append(
         "<div class='grid-item'><img onload='onLoadImage(this)' draggable=false src='" +
@@ -910,6 +912,20 @@ function populateGrid(type) {
     });
     emoji_items.forEach(function (item) {
       $('#emojis-row').append(
+        "<div class='grid-emoji-item'><img  onload='onLoadImage(this)' draggable=false src='" +
+          item +
+          "'></div>"
+      );
+    });
+    scenes_items.forEach(function (item) {
+      $('#scenes-row').append(
+        "<div class='grid-emoji-item'><img  onload='onLoadImage(this)' draggable=false src='" +
+          item +
+          "'></div>"
+      );
+    });
+    bubbles_items.forEach(function (item) {
+      $('#bubbles-row').append(
         "<div class='grid-emoji-item'><img  onload='onLoadImage(this)' draggable=false src='" +
           item +
           "'></div>"
@@ -1911,7 +1927,7 @@ function search() {
   } else if ($('#shape-tool').hasClass('tool-active')) {
     if (value == '') {
       $('#shapes-cont').html(
-        '<p class="row-title">Shapes</p><div class="gallery-row" id="shapes-row"></div><p class="row-title">Emojis</p><div class="gallery-row" id="emojis-row"></div>'
+        '<p class="row-title">Characters</p><div class="gallery-row" id="shapes-row"></div><p class="row-title">Props</p><div class="gallery-row" id="emojis-row"></div><p class="row-title">Scenes</p><div class="gallery-row" id="scenes-row"></div><p class="row-title">Bubbles</p><div class="gallery-row" id="bubbles-row"></div>'
       );
       populateGrid('shape-tool');
     } else {
@@ -1996,7 +2012,7 @@ function deleteSearch() {
   $('#delete-search').removeClass('show-delete');
   if ($('#shape-tool').hasClass('tool-active')) {
     $('#shapes-cont').html(
-      '<p class="row-title">Shapes</p><div class="gallery-row" id="shapes-row"></div><p class="row-title">Emojis</p><div class="gallery-row" id="emojis-row"></div>'
+      '<p class="row-title">Shapes</p><div class="gallery-row" id="shapes-row"></div><p class="row-title">Props</p><div class="gallery-row" id="emojis-row"></div><p class="row-title">Scenes</p><div class="gallery-row" id="emojis-row"></div><p class="row-title">Speech Bubbles</p><div class="gallery-row" id="emojis-row"></div>'
     );
     populateGrid('shape-tool');
   } else if ($('#image-tool').hasClass('tool-active')) {
