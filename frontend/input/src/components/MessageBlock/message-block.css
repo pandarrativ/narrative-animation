@@ -1,0 +1,47 @@
+.message-block{
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Set the height to fill the container */
+}
+
+
+.message-block-title{
+    width: calc(100% - 18px);
+    text-overflow: ellipsis;
+}
+
+/* text area */
+.textarea-message-block{
+    outline: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.16);
+    resize: none;
+    padding: 0.5rem 1rem;
+    flex-grow: 1; /* This will make the textareas fill up the remaining space */
+    margin: 0; /* Adjust margin as needed */
+    resize: none; /* Prevent manual resizing */
+}
+.message-block-btns{
+    border-top: 1px solid rgba(0, 0, 0, 0.16);
+}
+.message-block-btn{
+    /* width: 24px; */
+    padding: 4px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
+}
+
+.message-prompt{
+    height: 0;
+    overflow: hidden;
+    transition: all 0.5s;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.message-prompt-show-true{
+    height: auto;
+    overflow: auto;
+    padding: 0.5rem 1rem;
+}

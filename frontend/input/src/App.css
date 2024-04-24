@@ -1,0 +1,263 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'Kodchasan';
+  src: url('./assets/fonts/Kodchasan/Kodchasan-Regular.ttf') format('ttf'),
+       url('./assets/fonts/Kodchasan/Kodchasan-Regular.ttf') format('ttf');
+}
+
+@font-face {
+  font-family: 'MavenPro';
+  src: url('./assets/fonts/Maven_Pro/MavenPro-VariableFont_wght.ttf') format('woff2'),
+}
+
+@font-face {
+  font-family: "Monofett";
+  src: url("./assets/fonts/Monofett/Monofett-Regular.ttf") format('ttf');
+}
+
+
+/*****************************************************/
+/* Here are some layered classes */
+/*****************************************************/
+@layer components {
+  /* buttons */
+  .btn-style-1{
+    @apply gradient-btn input input-bordered rounded-2xl text-center font-semibold
+  } 
+
+
+  
+}
+
+
+/*****************************************************/
+/* Here are some customed utility-first css classes */
+/*****************************************************/
+
+
+/* Make img at the center of div regardless of the different shape : wrap a <img class="box-img"> inside <div class="img-box"> */
+.img-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.box-img{
+    min-width: 100%;
+    min-height: 100%;
+    display: block; 
+    object-fit: cover;
+}
+
+/* Make an img takes full height and at placed at the center. Hidden things on left/right margins that does not fit the container */
+.center-full-height-img-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; 
+}
+
+.center-full-height-box-img {
+  height: 100%;
+  min-width: 100%;
+  object-fit: cover; 
+}
+
+
+
+.gradient-btn{
+  background-image: radial-gradient(ellipse at center, #fbe5ff, #f3c4fb);
+}
+
+
+/* buttons */
+.btn-last-img{
+  background-image: url("./assets/icons/btn-last.svg");
+}
+.btn-next-img{
+  background-image: url("./assets/icons/btn-next.svg");
+}
+
+.btn-white-1{
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 0.5rem 2rem;
+  color: #755349;
+}
+.btn-white-1:hover{
+  background-image: linear-gradient(to left, #f8f9fa, #e9ecef, #f8f9fa); /* bg-gray-1*/
+  cursor: pointer;
+}
+
+
+.btn-white-2{
+  background-color: #fff;
+  border-radius: 24px;
+  padding: 0 2rem;
+  color: #755349;
+}
+.btn-white-2:hover{
+  background-image: linear-gradient(to left, #f8f9fa, #e9ecef, #f8f9fa); /* bg-gray-1*/
+  cursor: pointer;
+}
+
+
+
+/* textarea */
+.gray-text-area{
+  background-color: #adb5bd;  /* bg-gray-4*/
+  border-radius: 12px;
+  padding: 1rem 2rem;
+  resize: none;
+  outline: none;
+}
+.gray-text-area::placeholder {
+  color: #495057;  /* bg-gray-6*/
+}
+
+
+/* box shadow */
+.shadow-paper{
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
+.shadow-card{
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+.shadow-thik{
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+       rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+       rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+/* animation */
+.fade-out {
+  animation: fadeOut 1s forwards; 
+}
+.fade-in {
+  animation: fadeIn 1s forwards; 
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+
+/***********************************************************/
+/*                    chatting    bubbles                  */
+/***********************************************************/
+.btn-bubble-1{
+  border-radius: 16px;
+  background-image: linear-gradient(120deg, #f2e78c, #f5eed5, #c9c2b2);
+
+  position: relative;
+  box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
+  animation: floating 5s ease-in-out infinite;
+}
+
+.btn-bubble-1::before{
+  content: '';
+  position: absolute;
+
+  width: 12px;
+  height: 12px;
+
+  border-radius: 16px;
+  background-color: #f5eed5;
+  bottom: -45px;
+  left: 0px;
+
+  box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
+  animation: floating2 5s ease-in-out infinite;
+}
+
+
+.btn-bubble-1::after{
+  content: '';
+  position: absolute;
+
+  min-width: 2rem;
+  width: 30%;
+  height: 12px;
+
+  border-radius: 12px;
+  background-color: #f5eed5;
+  bottom: -25px;
+  left: 0px;
+
+  box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
+  animation: floating2 5s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0% {
+    transform: translatey(0px);
+  }
+  50% {
+    transform: translatey(-20px);
+  }
+  100% {
+    transform: translatey(0px);
+  }
+}
+@keyframes floating2 {
+  0% {
+      line-height: 30px;
+      transform: translatey(0px);
+    }
+    55% {
+      transform: translatey(-10px);
+    }
+    60% {
+      line-height: 10px;
+    }
+    100% {
+      line-height: 30px;
+      transform: translatey(0px);
+  }
+}
+
+
+
+.btn-bubble-2 {
+  position: relative;
+  background-image: linear-gradient(120deg, #f2e78c, #f5eed5, #c9c2b2);
+  border-radius: 24px;
+  text-align: center;
+}
+
+.btn-bubble-2:after {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 24px solid #f2e78c;
+  border-right: 12px solid transparent;
+  border-top: 12px solid #f2e78c;
+  border-bottom: 20px solid transparent;
+  left: 32px;
+  bottom: -24px;
+}
