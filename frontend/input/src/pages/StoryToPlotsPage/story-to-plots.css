@@ -1,0 +1,179 @@
+.card-creation-main{
+  overflow: hidden;
+}
+/************************** layout *************************/
+.creation-main-body{
+  width: 200%;
+  height: calc(100% - 64px);
+  transition: transform 1s ease;
+}
+
+.creation-body-part{
+  width: 25%;
+  height: 100%;
+  transition: width 1s ease;
+}
+.card-left-part{
+  width: 20%;
+}
+
+.card-right-part{
+  width: 30%;
+}
+
+
+/************************* conversation part *************************/
+.story-message-block-gradient{
+  background-image: linear-gradient(120deg, #ffe8be, #faffbd, #ffdcf2); 
+}
+
+.story-message-gradient{
+  background-image: linear-gradient(120deg, #ffdcf2, #faffbc, #ffdcf2); 
+}
+
+.story-segment-gradient{
+  background-image: linear-gradient(30deg, #fae6e5, #e2f7c5, #f7f7c5); 
+}
+
+/* message block */
+.card-conversation .message-block,
+.card-segment .message-block{
+  padding: 0 16px;
+  border: none;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+.card-conversation .message-block-header,
+.card-segment .message-block-header{
+  padding: 8px 0;
+}
+
+.card-conversation .message-block-title,
+.card-segment .message-block-title{
+  background-color: transparent;
+}
+.card-conversation .textarea-message-block,
+.card-segment .textarea-message-block{
+  border: none;
+  border-radius: 8px;
+}
+
+.card-conversation .message-prompt{
+  border-radius: 8px;
+  border: #adb5bd solid 2px;  /*gray 5*/
+  margin-top: 8px;
+}
+
+.card-conversation .message-block-btns,
+.card-segment .message-block-btns{
+  border: none;
+  padding: 8px 0;
+}
+
+
+/************************* story part *************************/
+.story-board-color{
+  color: #755349;
+}
+.card-story #simple-editor,
+.card-story #simple-editor .editor-container,
+.card-story #simple-editor .toolbar {
+  background-color: #fcf7e6;
+}
+
+#wood-panel-block-conversation{
+  position: fixed;
+  bottom: -320px;
+  /* bottom: 120px; */
+  left: 17vw;
+  width: 66vw;
+  height: 480px;
+  z-index: 10;
+}
+
+
+
+/************************* segments part *************************/
+.card-segments-block::-webkit-scrollbar-thumb {
+  background-color: #d9d9d9;
+  border-radius: 6px;
+  
+}
+.card-segments-block::-webkit-scrollbar-track {
+  background-color: #e6e6e6;
+  border-radius: 6px;
+}
+.card-segments-block::-webkit-scrollbar {
+  width: 100%;
+  height: 12px;
+}
+
+.card-segments-block .mblock-content-prompt{
+  flex-grow: 1;
+  min-height: 0;
+}
+.card-segments-block .message-prompt{
+  margin-top: 8px;
+  height: 20%;
+}
+
+.card-segments-block .message-block-btns .message-block-btn:last-child{
+  display: none;
+}
+
+/* modal */
+#wood-panel-block-segment{
+  position: fixed;
+  /* bottom: -320px; */
+  bottom: 120px;
+  left: 17vw;
+  width: 66vw;
+  height: 480px;
+  z-index: 10;
+}
+.bg-modal-cover{
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, .3);
+}
+
+#wood-panel-block-segment .wood-panel-expand {
+  margin-top: 0px;
+}
+
+.card-segment-wood {
+  transform: translateY(600px);
+  transition: transform 1s ease;
+}
+
+.card-segment-wood-up{
+  transform: translateY(0);
+}
+
+/***************************** image  generation ***************************/
+.fade-enter {
+  opacity: 0;
+  transition: opacity 0.5s ease-in;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 0.5s ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+
+.card-image-generation .excalidraw__canvas{
+  border-radius: 8px;
+}

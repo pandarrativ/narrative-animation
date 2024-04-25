@@ -1,0 +1,30 @@
+.sliding-carousel{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+
+    position: relative;
+}
+
+.sliding-carousel-card{
+    aspect-ratio: 9/16;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    transition: all 0.5 ease;
+
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.sliding-carousel-card:hover{
+    cursor: pointer;
+}
+
+.carousel-card-selected{
+    box-shadow: 0 50px 20px -30px rgba(0, 0, 0, 0.5);
+}
+
+
+.sliding-carousel-card>img{
+    height: 100%;
+    width: 100%;
+}
