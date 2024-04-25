@@ -6,12 +6,12 @@
         <link rel="stylesheet" href="nice-select.css">
         <link ref="stylesheet" href="range-slider.min.css">
         <link rel="stylesheet" href="magic-check.min.css">
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="styles-static.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/nano.min.css"/>
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <link rel="icon" type="image/x-icon" href="/favicon.ico">
 				<!-- Primary Meta Tags -->
-<title>Motionity - The web-based motion graphics editor for everyone</title>
+<title>Animation Editor</title>
 <meta name="title" content="Motionity - The web-based motion graphics editor for everyone">
 <meta name="description" content="Create animated videos for free with Motionity, an open source motion graphics editor with keyframing, masking, filters, text animations, and more. ">
 
@@ -97,17 +97,17 @@
 						<div id="tool-wrap">
 							<div class="tool" id="upload-tool"><img src="assets/uploads.svg"><p>Uploads</p></div>
 							<div class="tool tool-active" id="shape-tool"><img src="assets/shape-active.svg"><p>Objects</p></div>
-							<div class="tool" id="image-tool"><img src="assets/image.svg"><p>Images</p></div>
+							<!-- <div class="tool" id="image-tool"><img src="assets/image.svg"><p>Images</p></div> -->
 							<div class="tool" id="text-tool"><img src="assets/text.svg"><p>Text</p></div>
-							<div class="tool" id="video-tool"><img src="assets/video.svg"><p>Videos</p></div>
-							<div class="tool" id="audio-tool"><img src="assets/audio.svg"><p>Audio</p></div>
+							<!-- <div class="tool" id="video-tool"><img src="assets/video.svg"><p>Videos</p></div> -->
+							<!-- <div class="tool" id="audio-tool"><img src="assets/audio.svg"><p>Audio</p></div> -->
 							<div class="tool" id="more-tool"><img src="assets/more-hoz.svg"><p>More</p></div>
 					</div>
 				</div>
 				<div id="more-over">
-					<div id="upload-lottie">
+					<!-- <div id="upload-lottie">
 						<img src="assets/upload-grey.svg"> Upload Lottie
-					</div>						
+					</div>						 -->
 					<div id="clear-project">
 						<img src="assets/clear.svg"> Clear project
 					</div>
@@ -115,7 +115,26 @@
 				<div id="behind-browser"></div>
         <div id="browser">
             <div id="browser-container">
-							<div id="search-fixed"><p class="property-title">Objects</p><img id="collapse" src="assets/collapse.svg"><div id="browser-search"><input placeholder="Search..."><img src="assets/search.svg" id="search-icon"><img src="assets/delete.svg" id="delete-search"><div id="search-button">Go</div></div></div><div id="shapes-cont"><p class="row-title">Shapes</p><div class="gallery-row" id="shapes-row"></div><p class="row-title">Emojis</p><div class="gallery-row" id="emojis-row"></div></div>
+					<div id="search-fixed">
+						<p class="property-title">Objects</p>
+						<img id="collapse" src="assets/collapse.svg">
+						<div id="browser-search">
+							<input placeholder="Search...">
+							<img src="assets/search.svg" id="search-icon">
+							<img src="assets/delete.svg" id="delete-search">
+							<div id="search-button">Go</div>
+						</div>
+					</div>
+					<div id="shapes-cont">
+						<p class="row-title">Characters</p>
+						<div class="gallery-row" id="shapes-row"></div>
+						<p class="row-title">Props</p>
+						<div class="gallery-row" id="emojis-row"></div>
+						<p class="row-title">Scenes</p>
+						<div class="gallery-row" id="emojis-row"></div>
+						<p class="row-title">Speech Bubbles</p>
+						<div class="gallery-row" id="emojis-row"></div>
+					</div>
             </div>
         </div>
         <div id="properties">
@@ -276,8 +295,8 @@
             	</div>
 						</div>
 						<div id="bottom-canvas">
-							<!-- <a id="sponsor" href="https://github.com/sponsors/alyssaxuu" target="_blank"><img src="assets/sponsor.svg"> Sponsor</a> -->
-							<!-- <a id="alyssa-credit" href="https://twitter.com/alyssaxuu" target="_blank">Made by <span>Alyssa X</span> <img src="assets/alyssaimg.jpeg"></a> -->
+							<!-- <a id="sponsor" href="https://github.com/sponsors/alyssaxuu" target="_blank"><img src="assets/sponsor.svg"> Sponsor</a>
+							<a id="alyssa-credit" href="https://twitter.com/alyssaxuu" target="_blank">Made by <span>Alyssa X</span> <img src="assets/alyssaimg.jpeg"></a> -->
 						</div>
             <img src="assets/replace-image.svg" id="replace-image">
 						<img src="assets/loading-image.svg" id="load-image" class="load-media">
@@ -358,8 +377,9 @@
                 </div>
             </div>
 						<div id="controls-right">
-							<div id="share"><img src="assets/importexport.svg"> Import & export</div>
-							<div id="download"><img src="assets/download-icon.svg"> Download</div>
+							<!-- <div id="share"><img src="assets/importexport.svg"> Import & export</div> -->
+							<!-- <div id="download"><img src="assets/download-icon.svg"> Download</div> -->
+							<div id="next"><img src="assets/next-svgrepo-com.svg"> Next Page</div>
 						</div>
         </div>
         
@@ -384,7 +404,7 @@
 				<script src="js/lottie.js"></script>
 				<script src="js/text.js"></script>
 				<script src="js/recorder.js"></script>
-        <script src="js/functions.js"></script>
+        <script src="js/functions-static.js"></script>
         <script src="js/events.js"></script>
         <script src="js/test.js"></script>
     </body>

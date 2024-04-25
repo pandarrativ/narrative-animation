@@ -1,4 +1,4 @@
-:root {
+/* :root {
   --panel-back: #141629;
   --panel-stroke: #222544;
   --main-back: #070a1b;
@@ -7,19 +7,29 @@
   --input-color: #22233e;
   --accent-color: #166ef1;
   --button-hover: #262746;
-}
-/*
+} */
+/* :root {
+  --panel-back: #F7ECCD;
+  --panel-stroke: #F7ECCD;
+  --main-back: #F7ECCD;
+  --main-text-color: #382a26;
+  --secondary-text-color: #70544B;
+  --input-color: #EEF7CA;
+  --accent-color: #bb8d7d;
+  --button-hover: #262746;
+} */
+
 :root {
-    --panel-back: #FFF;
-    --panel-stroke: #EDEFF3;
-    --main-back: #F8F9FC;
-    --main-text-color: #333333;
-    --secondary-text-color: #a0a5d0;
-    --input-color: #EDEFF3;
-    --accent-color: #166EF1;
-    --button-hover: #262746;
+  --panel-back: #fff6e7; /* 面板背景色 */
+  --panel-stroke: #EDEFF3; /* 面板边框颜色 */
+  --main-back: #ededed; /* 主要背景色 */
+  --main-text-color: #333333; /* 主要文本颜色 */
+  --secondary-text-color: #bb8d7d; /* 次要文本颜色 */
+  --input-color: #fcf1e0; /* 输入框颜色 */
+  --accent-color: #bb8d7d; /* 强调色 */
+  --button-hover: #262746; /* 按钮悬停颜色 */
 }
-*/
+
 html,
 body {
   margin: 0px;
@@ -808,7 +818,7 @@ body {
   right: 0px;
   top: 0px;
   width: 300px;
-  height: calc(100% - 340px);
+  height: calc(100% - 300px);
   background-color: var(--panel-back);
   border-left: 1px solid var(--panel-stroke);
   z-index: 999;
@@ -1802,12 +1812,13 @@ layer:nth-child(even) .properties {
   bottom: 60px;
   left: 375px;
   height: 245px;
-  background-color: var(--main-back);
+  background-color: var(--panel-back);
   width: calc(100% - 375px);
   border-top: 1px solid var(--panel-stroke);
   z-index: 999;
 }
 #timeline-handle {
+  display: none;
   height: 3px;
   width: 100%;
   position: absolute;
@@ -1815,10 +1826,12 @@ layer:nth-child(even) .properties {
   z-index: 999999999999 !important;
 }
 #timeline-handle:hover {
+  display: none;
   cursor: ns-resize;
   background-color: var(--panel-stroke);
 }
 #seekarea {
+  display: none;
   height: 100%;
   z-index: 99999;
   width: calc(100% - 375px);
@@ -1837,7 +1850,7 @@ layer:nth-child(even) .properties {
   position: fixed;
   width: 100%;
   height: 40px;
-  background-color: var(--main-back);
+  background-color: var(--panel-back);
 }
 #seekevents {
   height: 40px;

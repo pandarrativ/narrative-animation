@@ -24,6 +24,7 @@ function StoryToPlotsPage() {
 
 
     const goNextStep = () => {
+        window.location.href = '/editor/src/index-static.html';
         navigate('/frontend/editor/src/index-static.html');
     }
     
