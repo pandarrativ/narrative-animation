@@ -16,11 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from prompt.views import openai_story_to_plot
-from prompt.views import get_plots_by_story
+from prompt.views import openai_story_to_plot, get_plots_by_story
+from prompt.views import ollama_story_to_plot
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('story/add/', openai_story_to_plot, name='openai_story_to_plot'),
-    path('story/get/', get_plots_by_story, name='get_plots_by_story')
+    path('story/get/', get_plots_by_story, name='get_plots_by_story'),
+    path('story/', get_plots_by_story, name='get_plots_by_story'),
+    path('storytoplot/', ollama_story_to_plot, name='ollama_story_to_plot')
+    # path('storytoplot/', get_plots_by_story, name='get_plots_by_story')
 ]

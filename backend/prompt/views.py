@@ -4,7 +4,7 @@ from .mongo_dal import MongoDAL
 import logging # 引入logging模块
 from bson import ObjectId # 用于将字符串转换为ObjectId
 # from celery import shared_task # 引入shared_task装饰器,执行异步任务
-from .tasks import generate_plot_and_update_story
+from .tasks import generate_plot_and_update_story, ollama_generate_plot
 
 
 logger = logging.getLogger('prompt_logger') # 获取logger实例
@@ -51,3 +51,24 @@ def get_plots_by_story(request):
         return JsonResponse({"plots": story["list_plots"]})
     else:
         return JsonResponse({"error": "This endpoint only supports GET requests."})
+    
+    
+def ollama_story_to_plot(request):
+    '''
+    Given a story, convert to plot json based on ollama model
+    '''
+    if request.method == 'POST':
+        # get story from request
+        content = request.POST.get('content', '')
+        user_prompt = request.POST.get('prompt', '')
+        
+        logger.info(f"Creating new story with title content {content}")
+        story_id = str(MongoDAL.create_undo_story("", content))
+        
+        # async processing
+        ollama_generate_plot.delay(story_id, content, user_prompt)
+        
+        # return without waiting for completion TODO: loading page
+        return JsonResponse({"message": "Processing story...", "story_id": story_id})
+    else:
+        return JsonResponse({"error": "This endpoint only supports POST requests."})
