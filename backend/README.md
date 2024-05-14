@@ -1,4 +1,5 @@
 ### Endpoints
+Convert story to plots
 ```http
 POST /storytoplot/
 
@@ -32,6 +33,12 @@ happily ever after in the rhythm of nature's dance"],
 }
 ```
 
+Get converted plots
+```http
+GET /storytoplot/{story_id}
+```
+
+Convert plots to animation elements
 ```http
 POST /plotstoelements/
 
@@ -63,4 +70,9 @@ happily ever after in the rhythm of nature's dance"],
     }
   ]
 }
+```
+
+Get converted animation elements
+```http
+GET /plotstoelements/{story_id}
 ```

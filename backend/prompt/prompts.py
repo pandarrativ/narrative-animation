@@ -25,5 +25,5 @@ and the movement (not necessary) should be very simple movements, either moving 
 
 # prompt for converting plot json (above) to animation elements with attributes
 PLOT_TO_ANIMATION_ELEMENTS = f"""
-
+TODO:
 """
