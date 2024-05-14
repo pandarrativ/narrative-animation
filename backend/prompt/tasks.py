@@ -3,6 +3,7 @@ from celery import shared_task
 from .mongo_dal import MongoDAL
 from .openai_api import OpenAIAPI
 import logging
+import prompts
 
 logger = logging.getLogger('prompt_logger')
 
@@ -10,7 +11,7 @@ logger = logging.getLogger('prompt_logger')
 def generate_plot_and_update_story(story_id, title, content):
     
     # 构建OpenAI API请求的prompt
-    prompt = f"Given the following story, identify and list the main plots:\n\n{title} {content}\n\nPlease provide a list of the main plots. For each plot, the format should be:\nPlot number: number, Plot name: name, Plot content: content. There should be a new line between each plot."
+    prompt = prompts.STORY_TO_PLOT + f"{title}\n\n{content}"
     reply = OpenAIAPI.send_prompt(prompt)
     
     # 将OpenAI API返回的结果拆分为一个plot列表
