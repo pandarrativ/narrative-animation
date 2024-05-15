@@ -1,0 +1,51 @@
+{
+    "objects": [
+        {
+            "objectId": 0,
+            "src": "assets/video/cloud.mp4",
+            "type": "video",
+            "layerId": 1,
+            "x": 100,
+            "y": 70,
+            "size": 150,
+            "keyframe": [
+              {
+                "property": "left",
+                "time": 0,
+                "value": 100
+              },
+              {
+                "property": "left",
+                "time": 5000,
+                "value": 600
+              }
+            ]
+        },
+        {
+            "objectId": 1,
+            "src": "assets/circle.svg",
+            "type": "image",
+            "layerId": 0,
+            "x": 200,
+            "y": 200,
+            "size": 100,
+            "keyframe": [
+                {
+                  "property": "opacity",
+                  "time": 0,
+                  "value": 0
+                },
+                {
+                    "property": "opacity",
+                    "time": 2000,
+                    "value": 0
+                },
+                {
+                  "property": "opacity",
+                  "time": 2500,
+                  "value": 100
+                }
+              ]
+        }
+    ]
+}

@@ -14,6 +14,10 @@ function resizeCanvas() {
 window.addEventListener('resize', resizeCanvas, false);
 resizeCanvas();
 
+
+
+
+
 // Highlight layers when selecting objects in the canvas, scroll into view if needed
 function updateSelection(e) {
   if (e.target.type == 'activeSelection') {

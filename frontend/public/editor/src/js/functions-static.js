@@ -58,6 +58,7 @@ function updateSelection(e) {
   }
 }
 
+
 // Object has been modified, automatically add a keyframe
 function autoKeyframe(object, e, multi) {
   if (e.action == 'drag') {

@@ -1108,3 +1108,52 @@ selectbox
       });
     }
   });
+
+
+// add an object to the canvas
+function addObjects(json) {
+  // on load -> call this method -> retrieve data from db and load into canvas
+  // Iterating over each object in the JSON
+  json.objects.forEach(object => {
+    // Determining object type and calling appropriate method
+    if (object.type === 'video') {
+      loadVideo(object.src, object.x, object.y, object.size);
+    } else if (object.type === 'image') {
+      loadImage(object.src, object.x, object.y, object.size);
+    }
+
+    // 遍历所有图像元素
+    var images = document.querySelectorAll('img.freeze');
+    console.log(images)
+
+    images.forEach(function(image) {
+      toggleAnimate(image)
+    });
+
+    // 模拟点击事件的函数
+    function simulateClick(element) {
+      var event = new MouseEvent('click', {
+          bubbles: true,
+          cancelable: true,
+          view: window
+      });
+      // 触发点击事件
+      element.dispatchEvent(event);
+    }
+    // Iterating over each keyframe of the object
+    object.keyframe.forEach(keyframe => {
+      // Calling newKeyframe for each keyframe
+      newKeyframe(keyframe.property, canvas.getActiveObject(), keyframe.time, canvas.getActiveObject().get('left'), true);
+    });
+  });
+}
+
+fetch('assets/testdata.json')
+  .then(response => response.json()) // 将响应解析为 JSON
+  .then(json => {
+      // 调用 addObjects 处理加载的 JSON 数据
+    addObjects(json);
+  })
+  .catch(error => {
+    console.error('Error fetching JSON:', error);
+  });
