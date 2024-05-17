@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'prompt',  # Add this line to include the prompt app
+    'celery',
+    'drf_yasg', 
 ]
 
 MIDDLEWARE = [

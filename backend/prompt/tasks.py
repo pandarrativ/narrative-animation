@@ -1,10 +1,10 @@
 # prompt/tasks.py
 from celery import shared_task
 from .mongo_dal import MongoDAL
-from llm.openai_api import OpenAIAPI
-from llm.ollama_api import OllamaAPI
+from .openai_api import OpenAIAPI
+from .ollama_api import OllamaAPI
 import logging
-import prompts
+from .prompts import STORY_TO_PLOT, PLOT_TO_ANIMATION_ELEMENTS
 
 logger = logging.getLogger('prompt_logger')
 
@@ -12,7 +12,7 @@ logger = logging.getLogger('prompt_logger')
 def generate_plot_and_update_story(story_id, title, content):
     
     # construct prompt
-    prompt = prompts.STORY_TO_PLOT + f"{title}\n{content}"
+    prompt = STORY_TO_PLOT + f"{title}\n{content}"
     reply = OpenAIAPI.send_prompt(prompt)
     
     # 将OpenAI API返回的结果拆分为一个plot列表
@@ -40,7 +40,7 @@ def ollama_generate_plot(story_id, content: str, user_prompt: str):
     '''
     
     # construct prompt
-    prompt = prompts.STORY_TO_PLOT + f"{content}" + f"\nAdditional requirements: {user_prompt}"
+    prompt = STORY_TO_PLOT + f"{content}" + f"\nAdditional requirements: {user_prompt}"
     reply = OllamaAPI.get_response(prompt)
     
     # convert reply to json in py TODO:
