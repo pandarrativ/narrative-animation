@@ -10,13 +10,8 @@
             "size": 150,
             "keyframe": [
               {
-                "property": "left",
-                "time": 0,
-                "value": 100
-              },
-              {
-                "property": "left",
-                "time": 5000,
+                "property": "object-x",
+                "time": 2500,
                 "value": 600
               }
             ]
@@ -31,17 +26,17 @@
             "size": 100,
             "keyframe": [
                 {
-                  "property": "opacity",
+                  "property": "object-x",
                   "time": 0,
                   "value": 0
                 },
                 {
-                    "property": "opacity",
+                    "property": "object-x",
                     "time": 2000,
                     "value": 0
                 },
                 {
-                  "property": "opacity",
+                  "property": "object-x",
                   "time": 2500,
                   "value": 100
                 }
