@@ -42,16 +42,17 @@ def ollama_generate_plot(story_id, content: str, user_prompt: str):
     # construct prompt
     prompt = STORY_TO_PLOT + f"{content}" + f"\nAdditional requirements: {user_prompt}"
     reply = OllamaAPI.get_response(prompt)
-    
+
     # convert reply to json in py TODO:
     plots_json = reply
 
     # 更新数据库中 story 的 plot_list
-    logger.info(f"Updating story {story_id} with plot list {plots_json}")
-    # story_id = MongoDAL.update_story(story_id, json) 
+    logger.info(f"Updating story {story_id} with plot list.")
+    # story_id = MongoDAL.update_story(story_id, json) TODO:
+    story_id = str(1) # TODO: this is emp
     
     # 更新数据库中 story 的状态为 True，表示处理完成
-    MongoDAL.update_story_status(story_id, True)
+    # MongoDAL.update_story_status(story_id, True) TODO:
     logger.info(f"Succssully updated story {story_id} with plot list {plots_json}")
     
     return str(story_id)

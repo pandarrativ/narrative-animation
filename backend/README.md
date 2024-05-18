@@ -1,3 +1,13 @@
+// memo: run ollama && starting server
+```
+to start:
+ollama run llama3
+python3 manage.py runserver
+
+todo: integrate pymongo
+todo: add crud (esp get) for story to plot
+```
+
 ### Endpoints
 Convert story to plots
 ```http

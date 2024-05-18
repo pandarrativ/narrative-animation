@@ -52,7 +52,7 @@ def get_plots_by_story(request):
     else:
         return JsonResponse({"error": "This endpoint only supports GET requests."})
     
-    
+@csrf_exempt
 def ollama_story_to_plot(request):
     '''
     Given a story, convert to plot json based on ollama model
@@ -63,12 +63,15 @@ def ollama_story_to_plot(request):
         user_prompt = request.POST.get('prompt', '')
         
         logger.info(f"Creating new story with title content {content}")
-        story_id = str(MongoDAL.create_undo_story("", content))
+        story_id = str(1) # TODO: this is temp
         
         # async processing
-        ollama_generate_plot.delay(story_id, content, user_prompt)
+        logger.info(f"Starting to call llm api")
+        story_id = ollama_generate_plot(story_id, content, user_prompt) # return the story id for the converted stroy
+        # TODO: api - get the converted story by story_id
+        logger.info(f"Retrieved result")
         
         # return without waiting for completion TODO: loading page
-        return JsonResponse({"message": "Processing story...", "story_id": story_id})
+        return JsonResponse({"message": "Finished processing story...", "story_id": story_id})
     else:
         return JsonResponse({"error": "This endpoint only supports POST requests."})
