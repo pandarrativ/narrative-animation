@@ -1,5 +1,6 @@
 import datetime
 from utils import get_db_handle
+from bson.objectid import ObjectId
 
 # mongo_dal.py
 
@@ -49,7 +50,7 @@ class MongoDAL:
     def add_story_processed(content, plots):
         db_handle, _ = get_db_handle(db_name='animation', host='localhost', port=27017)
         stories_collection = db_handle['story']
-        story = {"content": content, "list_plots": plots, "user_id": "SampleAdmin", "created_at": datetime.datetime.now(), "status": True, "elements": []}
+        story = {"content": content, "list_plots": plots, "user_id": "SampleAdmin", "created_at": datetime.datetime.now(), "status": True, "elements": ""}
         return stories_collection.insert_one(story).inserted_id
     
     # 查找故事，返回故事对象
@@ -61,4 +62,9 @@ class MongoDAL:
     def update_elements(story_id, elements):
         db_handle, _ = get_db_handle(db_name='animation', host='localhost', port=27017)
         stories_collection = db_handle['story']
+        
+        # Convert story_id to ObjectId
+        if isinstance(story_id, str):
+            story_id = ObjectId(story_id)
+            
         stories_collection.update_one({'_id': story_id}, {"$set": {"elements": elements}})

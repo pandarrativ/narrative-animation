@@ -75,6 +75,7 @@ def ollama_generate_elements(story_id:str, plots: str):
     # convert reply to json
     logger.info(f"[LOG] Got response from ollama, starting extracting json.\n")
     elements_json = extract_json(reply)
+    # logger.info(f"[LOG] Got response from ollama, elements = {elements_json}\n")
     if (elements_json is None):
         logger.info(f"[LOG] Reply is null, quitting.")
         return None
