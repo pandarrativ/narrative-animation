@@ -32,6 +32,7 @@ Convert plots to animation elements
 POST /plotstoelements/
 
 {
+  "story_id": xxxxx,
   "plots": [
     {
       "plotId": 1,

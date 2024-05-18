@@ -55,9 +55,34 @@ def ollama_generate_plot(content: str, user_prompt: str):
 
     # 更新数据库中 story 的 plot_list
     logger.info(f"[LOG] Extracted Json, start adding story with plots to mongodb.\n")
-    # story_id = MongoDAL.update_story(story_id, json)
     story_id = MongoDAL.add_story_processed(content, plots_json) 
     logger.info(f"[LOG] Added story {story_id} with plots.\n")
     
     return str(story_id)
 
+def ollama_generate_elements(story_id:str, plots: str):
+    '''
+    Convert plots to animation elements.
+    '''
+    # TODO: impl -> prompt engineering
+    # construct prompt
+    prompt = f"Now I have a JSON file containing information for each plot:\n```json\n{plots}\n```" \
+        + PLOT_TO_ANIMATION_ELEMENTS
+    
+    # send prompt to llm and get reply
+    reply = OllamaAPI.get_response(prompt)
+    
+    # convert reply to json
+    logger.info(f"[LOG] Got response from ollama, starting extracting json.\n")
+    elements_json = extract_json(reply)
+    if (elements_json is None):
+        logger.info(f"[LOG] Reply is null, quitting.")
+        return None
+    
+    # update into database
+    logger.info(f"[LOG] Updating story {story_id} with elements.\n")
+    # TODO: dal update elements
+    MongoDAL.update_elements(story_id, elements_json)
+    logger.info(f"[LOG] DB entry updated.\n")
+
+    return story_id

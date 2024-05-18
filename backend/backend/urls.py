@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from prompt.views import openai_story_to_plot, get_plots_by_story
-from prompt.views import ollama_story_to_plot, ollama_get_plots
+from prompt.views import ollama_story_to_plot, ollama_get_plots, ollama_plots_to_elements, ollama_get_elements
 
 # 配置swagger各个参数
 from drf_yasg import openapi
@@ -44,9 +44,12 @@ urlpatterns = [
     path('story/add/', openai_story_to_plot, name='openai_story_to_plot'),
     path('story/get/', get_plots_by_story, name='get_plots_by_story'),
     path('story/', get_plots_by_story, name='get_plots_by_story'),
-    # TODO: 测通「用户提交story」的api == ollama story to plot
     path('storytoplot/', ollama_story_to_plot, name='ollama_story_to_plot'),
     path('storytoplot/<str:story_id>/', ollama_get_plots, name='ollama_get_plots'),
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    # TODO: 2 apis
+    path('plotstoelements/', ollama_plots_to_elements, name='ollama_plots_to_elements'),
+    path('plotstoelements/<str:story_id>/', ollama_get_elements, name='ollama_get_elements'),
+    
+    # path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 
 ]
