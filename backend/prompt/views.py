@@ -5,7 +5,7 @@ import logging # 引入logging模块
 from bson import ObjectId # 用于将字符串转换为ObjectId
 # from celery import shared_task # 引入shared_task装饰器,执行异步任务
 from .tasks import generate_plot_and_update_story, ollama_generate_plot
-
+import json
 
 logger = logging.getLogger('prompt_logger') # 获取logger实例
 
@@ -24,7 +24,7 @@ def openai_story_to_plot(request):
         content = request.POST.get('content', '')
         
         # 在数据库中创建新的故事记录，状态为未完成，plot_list为空
-        logger.info(f"Creating new story with title {title} and content {content}")
+        logger.info(f"[LOG] Creating new story with title {title} and content {content}")
         story_id = str(MongoDAL.create_undo_story(title, content))
         
         # 通过openai api获得plot_list，添加到story中。异步执行任务，不等待完成
@@ -42,7 +42,7 @@ def get_plots_by_story(request):
         story_id = request.GET.get('story_id', '')
         
         # 从数据库中获取story
-        story = MongoDAL.get_story(ObjectId(story_id))
+        story = MongoDAL.get_story_entry(ObjectId(story_id))
         
         if story.status == False:
             return JsonResponse({"error": "Story is still processing."})
@@ -59,19 +59,33 @@ def ollama_story_to_plot(request):
     '''
     if request.method == 'POST':
         # get story from request
-        content = request.POST.get('content', '')
-        user_prompt = request.POST.get('prompt', '')
+        content = json.loads(request.body).get('content')
+        print(f"content is {content}\n")
+        user_prompt = json.loads(request.body).get('prompt')
         
-        logger.info(f"Creating new story with title content {content}")
-        story_id = str(1) # TODO: this is temp
-        
+        logger.info(f"[LOG] Creating new story with title content {content}")
         # async processing
-        logger.info(f"Starting to call llm api")
-        story_id = ollama_generate_plot(story_id, content, user_prompt) # return the story id for the converted stroy
+        logger.info(f"[LOG] Starting to call llm api")
+        story_id = ollama_generate_plot(content, user_prompt) # return the story id for the converted stroy
         # TODO: api - get the converted story by story_id
-        logger.info(f"Retrieved result")
+        logger.info(f"[LOG] Retrieved result")
         
         # return without waiting for completion TODO: loading page
         return JsonResponse({"message": "Finished processing story...", "story_id": story_id})
     else:
         return JsonResponse({"error": "This endpoint only supports POST requests."})
+    
+def ollama_get_plots(request, story_id):
+    if request.method == 'GET':
+        logger.info(f"[LOG] Received GET plots request.")
+        
+        # 从数据库中获取story
+        story_entry = MongoDAL.get_story_entry(ObjectId(story_id))
+
+        if story_entry['status'] == False:
+            return JsonResponse({"error": "Story is still processing."})
+
+        # 返回story的plots
+        return JsonResponse({"plots": story_entry["list_plots"]}) # a json string
+    else:
+        return JsonResponse({"error": "This endpoint only supports GET requests."})

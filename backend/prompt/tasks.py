@@ -5,6 +5,7 @@ from .openai_api import OpenAIAPI
 from .ollama_api import OllamaAPI
 import logging
 from .prompts import STORY_TO_PLOT, PLOT_TO_ANIMATION_ELEMENTS
+from utils import extract_json
 
 logger = logging.getLogger('prompt_logger')
 
@@ -19,18 +20,18 @@ def generate_plot_and_update_story(story_id, title, content):
     plot_list = reply.split("\n\n")
     
     # 更新数据库中 story 的 plot_list
-    logger.info(f"Updating story {story_id} with plot list {plot_list}")
+    logger.info(f"[LOG] Updating story {story_id} with plot list {plot_list}")
     story_id = MongoDAL.update_story(story_id, plot_list)
     
     # 更新数据库中 story 的状态为 True，表示处理完成
     MongoDAL.update_story_status(story_id, True)
-    logger.info(f"Succssully updated story {story_id} with plot list {plot_list}")
+    logger.info(f"[LOG] Succssully updated story {story_id} with plot list {plot_list}")
     
     return str(story_id)
 
 # sync
 # @shared_task
-def ollama_generate_plot(story_id, content: str, user_prompt: str):
+def ollama_generate_plot(content: str, user_prompt: str):
     '''
     Given a story, return plots in json format.
     
@@ -40,19 +41,23 @@ def ollama_generate_plot(story_id, content: str, user_prompt: str):
     '''
     
     # construct prompt
-    prompt = STORY_TO_PLOT + f"{content}" + f"\nAdditional requirements: {user_prompt}"
+    prompt = STORY_TO_PLOT + f"The story is {content}. Please generate the json according to the requirements" 
+    # + f"\nAdditional requirements: user_prompt {user_prompt if len(user_prompt) != 0 else 'none'}"
+    
     reply = OllamaAPI.get_response(prompt)
-
-    # convert reply to json in py TODO:
-    plots_json = reply
+    
+    # convert reply to json str
+    logger.info(f"[LOG] Got response from ollama, starting extracting json.\n")
+    plots_json = extract_json(reply)
+    if (plots_json is None):
+        logger.info(f"[LOG] Reply is null, quitting.")
+        return None
 
     # 更新数据库中 story 的 plot_list
-    logger.info(f"Updating story {story_id} with plot list.")
-    # story_id = MongoDAL.update_story(story_id, json) TODO:
-    story_id = str(1) # TODO: this is emp
-    
-    # 更新数据库中 story 的状态为 True，表示处理完成
-    # MongoDAL.update_story_status(story_id, True) TODO:
-    logger.info(f"Succssully updated story {story_id} with plot list {plots_json}")
+    logger.info(f"[LOG] Extracted Json, start adding story with plots to mongodb.\n")
+    # story_id = MongoDAL.update_story(story_id, json)
+    story_id = MongoDAL.add_story_processed(content, plots_json) 
+    logger.info(f"[LOG] Added story {story_id} with plots.\n")
     
     return str(story_id)
+

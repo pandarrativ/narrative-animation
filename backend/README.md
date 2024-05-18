@@ -4,6 +4,9 @@ to start:
 ollama run llama3
 python3 manage.py runserver
 
+brew services start mongodb-community
+mongosh
+
 todo: integrate pymongo
 todo: add crud (esp get) for story to plot
 ```
