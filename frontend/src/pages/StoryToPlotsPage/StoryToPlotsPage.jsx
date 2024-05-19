@@ -13,15 +13,14 @@ function StoryToPlotsPage() {
     const [showPanel, setShowPanel] = useState(true);
     const [showSegmentModal, setShowSegmentModal] = useState(false);
     const [showmModalBGCover, setShowModalBGCover] = useState(false);
-
+    const [promptContent, setPromptContent] = useState("");
+    const [storyContent, setStoryContent] = useState("");
 
     const goLastStep = () => {
     }
     // scroll to bottom
     // const conversationBottomRef = useRef();
     const storySegmentBottomRef = useRef();
-
-
 
     const goNextStep = () => {
         window.location.href = '/editor/src/index-static.html';
@@ -44,6 +43,11 @@ function StoryToPlotsPage() {
     }
 
     // 2.Story
+    const handleStoryChange = (story) => {
+        // ok
+        setStoryContent(story);
+    }
+
     const renderStoryComponent = () => {
         return (
             <div className="card-story py-4 px-8 h-full w-full">
@@ -51,7 +55,7 @@ function StoryToPlotsPage() {
                     <img src={bgEditorBoard} alt="a wood board" className="absolute h-full top-0 w-full z-[-10] shadow-thik rounded-md"></img>
                     <div className="story-board-color font-monofett text-h2 w-5/6 text-left">STORY EDITOR</div>
                     <div className="w-5/6 flex-grow shadow-card rounded-lg">
-                        <SimpleEditor></SimpleEditor>
+                        <SimpleEditor onDataChange={handleStoryChange}></SimpleEditor>
                     </div>
                 </div>
             </div>
@@ -88,19 +92,64 @@ function StoryToPlotsPage() {
         )
     }
 
+    const handleClose = () => {
+        setShowSegmentModal(false);
+        setTimeout(() => {
+            setShowModalBGCover(false);
+        }, 1000);
+    };
+
+    // handle click on generate
+    const handleClickSend = async () => {
+
+        try {
+            handleClose()
+
+            // TODO: Loading page
+
+            const response = await fetch('http://localhost:8000/storytoplot/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    content: storyContent,
+                    prompt: promptContent
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const dataJson = await response.json();
+            console.log("Response from server:", dataJson);
+
+            // TODO: handle the response data as needed
+            const storyId = dataJson.story_id;
+            // GET plots from db with this story id
+
+            // fill the forms with plots data
+
+            // TODO: when hit next -> collect edited plots and save to db again
+            
+        } catch (error) {
+            console.error("Error submitting story:", error);
+        }
+    }
 
     const renderSegmentModal = () => {
         return (
             
             <div id="wood-panel-block-segment" className={`card-segment-wood ${showSegmentModal && 'card-segment-wood-up'}`}>
                 <CardSegmentWoodPanel 
-                    onClose={() => {
-                        setShowSegmentModal(false);
-                        setTimeout(() => {
-                            setShowModalBGCover(false);
-                        }, 1000);
-                    }}
-                ></CardSegmentWoodPanel>
+                    value={promptContent}
+                    onValueChange={setPromptContent}
+                    onClickSend={handleClickSend}
+                    onClose={handleClose}
+                >
+                    
+                </CardSegmentWoodPanel>
             </div>
             
         );

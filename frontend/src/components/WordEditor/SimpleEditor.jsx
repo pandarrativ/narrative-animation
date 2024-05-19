@@ -11,6 +11,7 @@ import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import PlaygroundEditorTheme from './themes/PlaygroundEditorTheme';
 import PlaygroundNodes from './nodes/PlaygroundNodes';
 
+import {$getRoot} from 'lexical';
 import {ListPlugin} from '@lexical/react/LexicalListPlugin';
 import {CheckListPlugin} from '@lexical/react/LexicalCheckListPlugin';
 import ListMaxIndentLevelPlugin from './plugins/ListMaxIndentLevelPlugin/index';
@@ -28,13 +29,13 @@ import MentionsPlugin from './plugins/MentionsPlugin';
 import EmojisPlugin from './plugins/EmojisPlugin';
 import {HashtagPlugin} from '@lexical/react/LexicalHashtagPlugin';
 import KeywordsPlugin from './plugins/KeywordsPlugin';
+import {OnChangePlugin} from '@lexical/react/LexicalOnChangePlugin';
 
 import {CAN_USE_DOM} from './shared/canUseDOM';
 import Placeholder from './ui/Placeholder';
 import SimpleToolbarPlugin from "./plugins/SimpleToolbarPlugin/SimpleToolbarPlugin";
 
-
-function SimpleEditor() {
+function SimpleEditor({ onDataChange }) {
     const initialConfig = {
         namespace: 'Pandarrative Word Editor',
         nodes: [...PlaygroundNodes],
@@ -44,6 +45,15 @@ function SimpleEditor() {
         theme: PlaygroundEditorTheme,
     };
     
+    function onChange(editorState) {
+        editorState.read(() => {
+            // Read the contents of the EditorState here.
+            const root = $getRoot();
+            const text = root.getTextContent();
+            onDataChange(text)
+        });
+    }
+
 
     const [floatingAnchorElem, setFloatingAnchorElem] = useState(null);
     const [isSmallWidthViewport, setIsSmallWidthViewport] = useState(false);
@@ -71,7 +81,12 @@ function SimpleEditor() {
         };
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSmallWidthViewport]);
-    
+
+    // const [editorState, setEditorState] = useState();
+    // function onChange(editorState) {
+    //     console.log(JSON.stringify(editorState))
+    //     setEditorState(editorState);
+    //   }
 
     return (
         <div id="simple-editor">
@@ -100,7 +115,7 @@ function SimpleEditor() {
                             placeholder={<Placeholder>Enter your story...</Placeholder>}
                             ErrorBoundary={LexicalErrorBoundary}
                         />
-                       
+                        <OnChangePlugin onChange={onChange} />
                         <ListPlugin />
                         <CheckListPlugin />
                         <ListMaxIndentLevelPlugin maxDepth={7} />

@@ -8,7 +8,8 @@ export default function Routers(){
         <BrowserRouter>
             <Routes>
 
-                <Route path='/story-to-plots' element={<StoryToPlotsPage/>} />
+                {/* <Route path='/story-to-plots' element={<StoryToPlotsPage/>} /> */}
+                <Route path='/' element={<StoryToPlotsPage/>} />
                 
             </Routes>
         </BrowserRouter>
