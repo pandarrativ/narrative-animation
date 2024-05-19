@@ -41,8 +41,8 @@ def ollama_generate_plot(content: str, user_prompt: str):
     '''
     
     # construct prompt
-    prompt = STORY_TO_PLOT + f"The story is {content}. Please generate the json according to the requirements" 
-    # + f"\nAdditional requirements: user_prompt {user_prompt if len(user_prompt) != 0 else 'none'}"
+    prompt = STORY_TO_PLOT + f"The story is {content}. Please generate the json according to the requirements" \
+        + f"\nAdditional requirements: {user_prompt if len(user_prompt) != 0 else 'none'}"
     
     reply = OllamaAPI.get_response(prompt)
     
