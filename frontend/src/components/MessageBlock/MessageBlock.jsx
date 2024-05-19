@@ -2,8 +2,25 @@ import { useState } from "react";
 import "./message-block.css";
 import iconAI from "../../assets/icons/ai.svg";
 
-function MessageBlock({title, content, prompt, onTitleChange, onContentChange, onPromptChange, regenerateContent, onDelete, openPrompt, characters, settings, props}) {
+function MessageBlock({plotId, title, content, prompt, onTitleChange, onContentChange, onPromptChange, regenerateContent, onDelete, openPrompt, characters, settings, props}) {
     const [showPrompt, setShowPrompt] = useState(openPrompt === undefined ? false: openPrompt);
+    const [charactersValue, setCharacters] = useState(characters);
+    const [settingsValue, setSettingsValue] = useState(settings);
+    const [propsValue, setPropsValue] = useState(props);
+
+    const handleTextChange = (event) => {
+        // key = plot id, id = type of textarea
+        if (event.target.id === 'characters') {
+            setCharacters(event.target.value)
+        }
+        if (event.target.id === 'settings') {
+            setSettingsValue(event.target.value)
+        }
+        if (event.target.id === 'props') {
+            setPropsValue(event.target.value)
+        }
+        onContentChange(plotId, event.target.id, event.target.value);
+    };
 
     return ( 
         <div className="message-block flex flex-col gap-0">
@@ -18,20 +35,23 @@ function MessageBlock({title, content, prompt, onTitleChange, onContentChange, o
             <textarea 
                 className={`textarea-message-block text-small1 message-prompt message-prompt-show-${showPrompt}`} 
                 placeholder="Characters"
-                value={characters}
-                onChange={onPromptChange}
+                id="characters"
+                value={charactersValue}
+                onChange={handleTextChange}
             ></textarea>
             <textarea 
                 className={`textarea-message-block text-small1 message-prompt message-prompt-show-${showPrompt}`} 
                 placeholder="Settings"
-                value={settings}
-                onChange={onPromptChange}
+                id="settings"
+                value={settingsValue}
+                onChange={handleTextChange}
             ></textarea>
             <textarea 
                 className={`textarea-message-block text-small1 message-prompt message-prompt-show-${showPrompt}`} 
                 placeholder="Props"
-                value={props}
-                onChange={onPromptChange}
+                id="props"
+                value={propsValue}
+                onChange={handleTextChange}
             ></textarea>
             <div className="flex flex-row gap-2 justify-between py-1 px-4 items-center message-block-btns">
                 <button className="message-block-btn">

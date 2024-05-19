@@ -15,7 +15,14 @@ function StoryToPlotsPage() {
     const [showmModalBGCover, setShowModalBGCover] = useState(false);
     const [promptContent, setPromptContent] = useState("");
     const [storyContent, setStoryContent] = useState("");
+    const [storyId, setStoryId] = useState("");
     const [storySegments, setStorySegments] = useState([]);
+    const [plotsData, setPlotsData] = useState([{
+        "plotId": "9999",
+        "characters": [],
+        "settings": "",
+        "props": []
+    }]); // plots is a list of {chs,stt,prps}
 
     const goLastStep = () => {
     }
@@ -27,6 +34,33 @@ function StoryToPlotsPage() {
         window.location.href = '/editor/src/index-static.html';
         // navigate('/frontend/editor/src/index-static.html');
     }
+
+    const handleNext = async () => {
+        // collect edited plots -- ok
+        console.log(plotsData); // ok
+
+        // call POST /plotstoelements with json
+        const response = await fetch('http://localhost:8000/plotstoelements/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                story_id: storyId,
+                plots: plotsData
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        console.log("converted to elements!")
+
+        // TODO: uncomment
+        // goNextStep();
+
+    };
     
 
     const renderWoodPanel = () => {
@@ -65,8 +99,27 @@ function StoryToPlotsPage() {
 
 
     // 3.Segments
-    const StorySegmentComponent = (storySegments = []) => {
+    const StorySegmentComponent = (storySegments = [], plotsData, setPlotsData) => {
+
+        const handlePlotChange = (plotId, areaId, textContent) => {
+            // 遍历 plotsData 中的所有项
+            const updatedPlotsData = plotsData.map(plot => {
+                // 如果当前 plot 的 plotId 等于传入的 plotId，则更新其 areaId 属性
+                if (plot.plotId === plotId) {
+                    return {
+                        ...plot,
+                        [areaId]: textContent
+                    };
+                }
+                // 如果不是目标 plot，则保持不变
+                return plot;
+            });
+            // 更新状态
+            setPlotsData(updatedPlotsData);
+            // ok
+        };
         
+
         return (     
           <div className={`card-segment py-4 px-8 h-full flex flex-col gap-2`}>
               <div className="h-full w-full flex flex-col gap-2 story-segment-gradient shadow-card rounded-lg px-4 py-4">
@@ -85,19 +138,22 @@ function StoryToPlotsPage() {
                             storySegments.map((segment, index) => (
                             <MessageBlock
                                 key={index}
+                                plotId={segment.plotId}
                                 openPrompt={true}
                                 characters={segment.characters}
                                 settings={segment.settings}
                                 props={segment.props}
-                                onTitleChange={() => {}}
-                                onContentChange={() => {}}
-                                onPromptChange={() => {}}
-                                regenerateContent={() => {}}
-                                onDelete={() => {}}
+                                onContentChange={handlePlotChange}
                             />
                             ))
                         )}
-                        <MessageBlock openPrompt={true} />
+                        <MessageBlock 
+                            plotId="9999" 
+                            characters={[]}
+                            settings={""}
+                            props={[]}
+                            onContentChange={handlePlotChange} 
+                            openPrompt={true} />
                       <div ref={storySegmentBottomRef}></div>
                   </div>
               </div>
@@ -139,7 +195,8 @@ function StoryToPlotsPage() {
             console.log("Response from server:", dataJson);
 
             const storyId = dataJson.story_id;
-            // TODO: call /storytoplot/{story_id} to getplots from db with this story id
+            setStoryId(storyId);
+            // call /storytoplot/{story_id} to getplots from db with this story id
             const plotResponse = await fetch('http://localhost:8000/storytoplot/' + storyId, {
                 method: 'GET',
             });
@@ -151,9 +208,10 @@ function StoryToPlotsPage() {
     
             const plotData = await plotResponse.json();
     
-            // TODO: fill the forms with plots data
+            // fill the forms with plots data
             var plots = plotData.plots;
             plots = JSON.parse(plots);
+            setPlotsData(plots.plots); // TODO: check
             setStorySegments(plots.plots.map(plot => {
                 const characters = plot.characters.join('\n');
                 const settings = plot.settings;
@@ -161,8 +219,6 @@ function StoryToPlotsPage() {
                 return { characters, settings, props };
             }));
             console.log("updated story segmt data");
-            // TODO: when hit next -> collect edited plots and call POST /plotstoelements
-            // with json
 
         } catch (error) {
             console.error("Error submitting story:", error);
@@ -199,13 +255,13 @@ function StoryToPlotsPage() {
                 </div>
 
                 <div className="creation-body-part h-full">
-                    {StorySegmentComponent(storySegments)}
+                    {StorySegmentComponent(storySegments, plotsData, setPlotsData)}
                 </div>
 
             </div>
             <div className="flex flex-row justify-between h-12 px-4">
                 <button className="btn-white-2 font-monofett text-h3 shadow-card" onClick={goLastStep}>PREV</button>
-                <button className="btn-white-2 font-monofett text-h3 shadow-card" onClick={goNextStep}>NEXT</button>
+                <button className="btn-white-2 font-monofett text-h3 shadow-card" onClick={handleNext}>NEXT</button>
             </div>
             
             {renderWoodPanel()}
