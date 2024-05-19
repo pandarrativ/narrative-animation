@@ -8,4 +8,3 @@ To start frontend:
 - `cd frontend`
 - `npm install`
 - `npm start`
-- modify the path to `http://localhost:3000/story-to-plots`
