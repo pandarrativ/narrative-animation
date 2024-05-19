@@ -15,6 +15,7 @@ function StoryToPlotsPage() {
     const [showmModalBGCover, setShowModalBGCover] = useState(false);
     const [promptContent, setPromptContent] = useState("");
     const [storyContent, setStoryContent] = useState("");
+    const [storySegments, setStorySegments] = useState([]);
 
     const goLastStep = () => {
     }
@@ -64,7 +65,8 @@ function StoryToPlotsPage() {
 
 
     // 3.Segments
-    const renderStorySegmentComponent = () => {
+    const StorySegmentComponent = (storySegments) => {
+        
         return (     
           <div className={`card-segment py-4 px-8 h-full flex flex-col gap-2`}>
               <div className="h-full w-full flex flex-col gap-2 story-segment-gradient shadow-card rounded-lg px-4 py-4">
@@ -79,12 +81,24 @@ function StoryToPlotsPage() {
                       >AI-Segmentation</button>
                   </div>
                   <div className="card-segments-block flex flex-row flex-grow gap-4 w-full mx-auto overflow-auto pb-4 pt-1 px-1">
-                      <MessageBlock openPrompt={true}/>
-                      <MessageBlock openPrompt={true}/>
-                      <MessageBlock openPrompt={true}/>
-                      <MessageBlock openPrompt={true}/>
-                      <MessageBlock openPrompt={true}/>
-                      <MessageBlock openPrompt={true}/>
+                        {storySegments !== undefined ? (
+                            storySegments.map((segment, index) => (
+                            <MessageBlock
+                                key={index}
+                                openPrompt={true}
+                                characters={segment.characters}
+                                settings={segment.settings}
+                                props={segment.props}
+                                onTitleChange={() => {}}
+                                onContentChange={() => {}}
+                                onPromptChange={() => {}}
+                                regenerateContent={() => {}}
+                                onDelete={() => {}}
+                            />
+                            ))
+                        ) : (
+                            <MessageBlock openPrompt={true} />
+                        )}
                       <div ref={storySegmentBottomRef}></div>
                   </div>
               </div>
@@ -125,14 +139,34 @@ function StoryToPlotsPage() {
             const dataJson = await response.json();
             console.log("Response from server:", dataJson);
 
-            // TODO: handle the response data as needed
             const storyId = dataJson.story_id;
-            // GET plots from db with this story id
+            // TODO: 调用 /storytoplot/{story_id} to getplots from db with this story id
+            const plotResponse = await fetch(`http://localhost:8000/storytoplot/${storyId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+    
+            if (!plotResponse.ok) {
+                throw new Error('Network response was not ok');
+            }
+    
+            const plotData = await plotResponse.json();
+            console.log("Plots from server:", plotData);
+    
+            // TODO: fill the forms with plots data
+            const plots = plotData.plots;
+            setStorySegments(plots.map(plot => {
+                const characters = plot.characters.join('\n');
+                const settings = plot.settings.join('\n');
+                const props = plot.props.join('\n');
+                return { characters, settings, props };
+            }));
 
-            // fill the forms with plots data
+            // TODO: when hit next -> collect edited plots and call POST /plotstoelements
+            // with json
 
-            // TODO: when hit next -> collect edited plots and save to db again
-            
         } catch (error) {
             console.error("Error submitting story:", error);
         }
@@ -168,7 +202,7 @@ function StoryToPlotsPage() {
                 </div>
 
                 <div className="creation-body-part h-full">
-                    {renderStorySegmentComponent()}
+                    {StorySegmentComponent()}
                 </div>
 
             </div>
