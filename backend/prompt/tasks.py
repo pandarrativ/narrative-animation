@@ -82,7 +82,7 @@ def ollama_generate_elements(story_id:str, plots: str):
     
     # update into database
     logger.info(f"[LOG] Updating story {story_id} with elements.\n")
-    # TODO: dal update elements
+    # TODO: also save plots to db (for they might be updated by the user)
     MongoDAL.update_elements(story_id, elements_json)
     logger.info(f"[LOG] DB entry updated.\n")
 
