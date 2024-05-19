@@ -35,7 +35,7 @@ def openai_story_to_plot(request):
     else:
         return JsonResponse({"error": "This endpoint only supports POST requests."})
 
-
+@csrf_exempt
 def get_plots_by_story(request):
     if request.method == 'GET':
         # 获取请求中的story_id
@@ -73,7 +73,8 @@ def ollama_story_to_plot(request):
         return JsonResponse({"message": "Finished processing story.", "story_id": story_id})
     else:
         return JsonResponse({"error": "This endpoint only supports POST requests."})
-    
+
+@csrf_exempt
 def ollama_get_plots(request, story_id):
     if request.method == 'GET':
         logger.info(f"[LOG] Received GET plots request.")
@@ -111,7 +112,7 @@ def ollama_plots_to_elements(request):
     else:
         return JsonResponse({"error": "This endpoint only supports POST requests."})
     
-
+@csrf_exempt
 def ollama_get_elements(request, story_id):
 
     # TODO: test
