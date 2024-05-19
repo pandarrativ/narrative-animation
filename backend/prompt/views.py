@@ -86,7 +86,9 @@ def ollama_get_plots(request, story_id):
             return JsonResponse({"error": "Story is still processing."})
 
         # 返回story的plots
-        return JsonResponse({"plots": story_entry["list_plots"]}) # a json string
+        response = JsonResponse({"plots": story_entry["list_plots"]})  # a json string
+        response['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        return response
     else:
         return JsonResponse({"error": "This endpoint only supports GET requests."})
 

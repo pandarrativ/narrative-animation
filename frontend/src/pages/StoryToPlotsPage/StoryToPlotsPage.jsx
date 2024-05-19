@@ -65,7 +65,7 @@ function StoryToPlotsPage() {
 
 
     // 3.Segments
-    const StorySegmentComponent = (storySegments) => {
+    const StorySegmentComponent = (storySegments = []) => {
         
         return (     
           <div className={`card-segment py-4 px-8 h-full flex flex-col gap-2`}>
@@ -81,7 +81,7 @@ function StoryToPlotsPage() {
                       >AI-Segmentation</button>
                   </div>
                   <div className="card-segments-block flex flex-row flex-grow gap-4 w-full mx-auto overflow-auto pb-4 pt-1 px-1">
-                        {storySegments !== undefined ? (
+                        {(
                             storySegments.map((segment, index) => (
                             <MessageBlock
                                 key={index}
@@ -96,9 +96,8 @@ function StoryToPlotsPage() {
                                 onDelete={() => {}}
                             />
                             ))
-                        ) : (
-                            <MessageBlock openPrompt={true} />
                         )}
+                        <MessageBlock openPrompt={true} />
                       <div ref={storySegmentBottomRef}></div>
                   </div>
               </div>
@@ -140,30 +139,28 @@ function StoryToPlotsPage() {
             console.log("Response from server:", dataJson);
 
             const storyId = dataJson.story_id;
-            // TODO: 调用 /storytoplot/{story_id} to getplots from db with this story id
-            const plotResponse = await fetch(`http://localhost:8000/storytoplot/${storyId}`, {
+            // TODO: call /storytoplot/{story_id} to getplots from db with this story id
+            const plotResponse = await fetch('http://localhost:8000/storytoplot/' + storyId, {
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
             });
+            console.log("Finished fetching plots data with ", storyId);
     
             if (!plotResponse.ok) {
                 throw new Error('Network response was not ok');
             }
     
             const plotData = await plotResponse.json();
-            console.log("Plots from server:", plotData);
     
             // TODO: fill the forms with plots data
-            const plots = plotData.plots;
-            setStorySegments(plots.map(plot => {
+            var plots = plotData.plots;
+            plots = JSON.parse(plots);
+            setStorySegments(plots.plots.map(plot => {
                 const characters = plot.characters.join('\n');
-                const settings = plot.settings.join('\n');
+                const settings = plot.settings;
                 const props = plot.props.join('\n');
                 return { characters, settings, props };
             }));
-
+            console.log("updated story segmt data");
             // TODO: when hit next -> collect edited plots and call POST /plotstoelements
             // with json
 
@@ -202,7 +199,7 @@ function StoryToPlotsPage() {
                 </div>
 
                 <div className="creation-body-part h-full">
-                    {StorySegmentComponent()}
+                    {StorySegmentComponent(storySegments)}
                 </div>
 
             </div>
