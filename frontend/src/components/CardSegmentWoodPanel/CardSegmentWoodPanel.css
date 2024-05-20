@@ -1,0 +1,5 @@
+.gray-text-area {
+    background-color: white; /* 将背景颜色设置为白色 */
+    box-shadow: none;
+    border-radius: 4px;
+}

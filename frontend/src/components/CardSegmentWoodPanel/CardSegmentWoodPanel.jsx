@@ -1,4 +1,5 @@
 import iconWoodPanel from "./imgs/woodpanel.png";
+import "./CardSegmentWoodPanel.css"
 
 function CardSegmentWoodPanel({value, onValueChange, onClickSend, onClose }) {
     return ( 
