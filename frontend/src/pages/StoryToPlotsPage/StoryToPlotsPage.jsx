@@ -31,7 +31,7 @@ function StoryToPlotsPage() {
     const storySegmentBottomRef = useRef();
 
     const goNextStep = () => {
-        window.location.href = '/editor/src/index-static.html';
+        window.location.href = '/editor/src/index.html'; // skip static page
         // navigate('/frontend/editor/src/index-static.html');
     }
 
@@ -65,6 +65,7 @@ function StoryToPlotsPage() {
 
         const elementData = await elementsResponse.json();
         sessionStorage.setItem('elementsData', JSON.stringify(elementData.plots)); // actually elements
+        localStorage.setItem('storyId', storyId); // actually elements
         sessionStorage.setItem('storyId', storyId); // actually elements
 
         // TODO: uncomment

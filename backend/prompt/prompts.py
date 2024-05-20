@@ -33,37 +33,56 @@ Also, the 'setting' in the plot should occupy the full canvas, and has the large
 
 For
 Now generate another JSON based on the provided JSON, with the following format, starting with "objects":
-
+For the background element, the params should be set to x=0, y=0, size=1000
+There should be no comments inside json.
+Temporarily please choose from "assets/imgs/blue-sky-grass.png" or "assets/imgs/cloud-chocotoy.gif" or "assets/imgs/cartoon-bar-teddy-bear.png" for resources' src path.
+Make sure every object has at least two keyframes so that it will be moving.
+keyframe's time range is [0, 2800].
+keyframe's value range is [100,600].
 ```json
 {
     "objects": [
         {
             "objectId": 0,
-            "src": "assets/xxx",
-            "type": "image",
+            "src": "assets/video/cloud.mp4",
+            "type": "video",
             "layerId": 1,
             "x": 100,
-            "y": 100,
-            "size": 100,
+            "y": 70,
+            "size": 150,
             "keyframe": [
               {
-                
+                "property": "object-x",
+                "time": 2500,
+                "value": 600
               }
             ]
         },
         {
             "objectId": 1,
-            "src": "assets/xxxxx",
-            "type": "video",
+            "src": "assets/circle.svg",
+            "type": "image",
             "layerId": 0,
             "x": 200,
             "y": 200,
             "size": 100,
             "keyframe": [
-              {
-                abc
-              }
-            ]
+                {
+                  "property": "object-x",
+                  "time": 0,
+                  "value": 0
+                },
+                {
+                    "property": "object-x",
+                    "time": 2000,
+                    "value": 0
+                },
+                {
+                  "property": "object-x",
+                  "time": 2500,
+                  "value": 100
+                }
+              ]
         }
     ]
 }

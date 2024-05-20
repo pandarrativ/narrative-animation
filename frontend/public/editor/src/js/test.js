@@ -118,6 +118,7 @@ function seekToTime(time) {
         element.dispatchEvent(event);
     }
 
+
     // 添加对象到画布的函数
     function addObjects(json) {
         json.objects.forEach(object => {
@@ -154,17 +155,34 @@ function seekToTime(time) {
                     // newKeyframe(keyframe.property, canvas.getActiveObject(), keyframe.time, canvas.getActiveObject().get('left'), true);
                 });
             }, 500);
+            console.log("added object", object.objectI);
         });
     }
-
-    // 从 JSON 文件加载数据
-    fetch('assets/testdata.json')
+    const storyId = localStorage.getItem('storyId');
+    console.log("LOG --- Received storyId");
+    fetch('http://localhost:8000/plotstoelements/' + storyId, {
+            method: 'GET',
+        })
         .then(response => response.json()) // 将响应解析为 JSON
         .then(json => {
             // 调用 addObjects 处理加载的 JSON 数据
-            addObjects(json);
+            console.log("LOG --- got data:\n", json.plots);
+            console.log("LOG --- trying to add objects:\n", JSON.parse(json.plots));
+            addObjects(JSON.parse(json.plots));
+            console.log("LOG --- Fin adding objects");
         })
         .catch(error => {
             console.error('Error fetching JSON:', error);
         });
+
+    // 从 JSON 文件加载数据
+    // fetch('assets/testdata.json')
+    //     .then(response => response.json()) // 将响应解析为 JSON
+    //     .then(json => {
+    //         // 调用 addObjects 处理加载的 JSON 数据
+    //         addObjects(json);
+    //     })
+    //     .catch(error => {
+    //         console.error('Error fetching JSON:', error);
+    //     });
 });
