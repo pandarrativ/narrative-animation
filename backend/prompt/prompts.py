@@ -32,7 +32,7 @@ Please set the position and size (radius) of each element according to this canv
 Also, the 'setting' in the plot should occupy the full canvas, and has the largest layer id.
 
 For
-Now generate another JSON based on the provided JSON, with the following format:
+Now generate another JSON based on the provided JSON, with the following format, starting with "objects":
 
 ```json
 {

@@ -36,13 +36,7 @@ function StoryToPlotsPage() {
     }
 
     const handleNext = async () => {
-        // collect edited plots -- ok
-        console.log(plotsData); // ok
-        console.log("json submitted: ");
-        console.log(JSON.stringify({
-            story_id: storyId,
-            plots: plotsData
-        }));
+        // TODO: loading
 
         // TODO: check -- call POST /plotstoelements with json
         const response = await fetch('http://localhost:8000/plotstoelements/', {
@@ -60,10 +54,21 @@ function StoryToPlotsPage() {
             throw new Error('Network response was not ok');
         }
 
-        console.log("converted to elements!")
+        // console.log("converted to elements!") // 20s ok
+        const elementsResponse = await fetch('http://localhost:8000/plotstoelements/' + storyId, {
+            method: 'GET',
+        });
+        console.log("Finished fetching elements data with ", storyId);
+        if (!elementsResponse.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const elementData = await elementsResponse.json();
+        sessionStorage.setItem('elementsData', JSON.stringify(elementData.plots)); // actually elements
+        sessionStorage.setItem('storyId', storyId); // actually elements
 
         // TODO: uncomment
-        // goNextStep();
+        goNextStep();
 
     };
     
@@ -215,7 +220,6 @@ function StoryToPlotsPage() {
     
             // fill the forms with plots data
             var plots = plotData.plots;
-            console.log(plots);
             plots = JSON.parse(plots);
 
             setPlotsData(plots.plots); // TODO: check
