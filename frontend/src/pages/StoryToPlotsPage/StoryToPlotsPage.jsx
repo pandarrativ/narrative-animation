@@ -38,8 +38,13 @@ function StoryToPlotsPage() {
     const handleNext = async () => {
         // collect edited plots -- ok
         console.log(plotsData); // ok
+        console.log("json submitted: ");
+        console.log(JSON.stringify({
+            story_id: storyId,
+            plots: plotsData
+        }));
 
-        // call POST /plotstoelements with json
+        // TODO: check -- call POST /plotstoelements with json
         const response = await fetch('http://localhost:8000/plotstoelements/', {
             method: 'POST',
             headers: {
@@ -210,7 +215,9 @@ function StoryToPlotsPage() {
     
             // fill the forms with plots data
             var plots = plotData.plots;
+            console.log(plots);
             plots = JSON.parse(plots);
+
             setPlotsData(plots.plots); // TODO: check
             setStorySegments(plots.plots.map(plot => {
                 const characters = plot.characters.join('\n');

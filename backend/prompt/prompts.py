@@ -6,13 +6,13 @@ STORY_TO_PLOT = """I will give you a story, please identify and list the main pl
 You should provide a list of the main plots. For each plot, the format should be:
 a JSON like this: 
 {
-  plots: [
+  "plots": [
     {
-      plotId: 1,
-      plot: ["A does xxxx, and says xxx", "B does yyy and says yyy"]
-      characters: ["Billy the bear", "CHARACTER NAME the TYPE", "xxx"],
-      settings: "A descriptive sentence describing how the background of the animation should be like. There must be only one background in a single location.",
-      props: ["xxx", "xxx"]
+      "plotId": 1,
+      "plot": ["A does xxxx, and says xxx", "B does yyy and says yyy"]
+      "characters": ["Billy the bear", "CHARACTER NAME the TYPE", "xxx"],
+      "settings": "A descriptive sentence describing how the background of the animation should be like. There must be only one background in a single location.",
+      "props": ["xxx", "xxx"]
     }
   ]
 }
